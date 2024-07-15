@@ -4,14 +4,14 @@
             <div class="buttonList">
                 <el-button @click="classChoose('all')">全部画作</el-button>
                 <el-button @click="classChoose('circle')">圆画</el-button>
-                <el-button @click="classChoose('chang')">长画</el-button>
-                <el-button @click="classChoose('shan')">扇形画</el-button>
-                <el-button @click="classChoose('squre')">方画</el-button>
+                <el-button @click="classChoose('rectangle')">长画</el-button>
+                <el-button @click="classChoose('sector')">扇形画</el-button>
+                <el-button @click="classChoose('square')">方画</el-button>
                 <el-button @click="add" type="primary" icon="el-icon-plus">添加新画</el-button>
             </div>
             <el-table :data="curPageData" border stripe>
                 <el-table-column prop="id" label="ID"></el-table-column>
-                <el-table-column prop="title" label="名称"></el-table-column>
+                <el-table-column prop="name" label="名称"></el-table-column>
                 <el-table-column label="图片">
                     <template slot-scope="scope">
                         <el-image :src="'http://47.94.237.19'+scope.row.src" :fit="'fit'"></el-image>
@@ -19,10 +19,10 @@
                 </el-table-column>
                 <el-table-column label="分类">
                     <template slot-scope="scope">
-                        <span v-if="scope.row.class == 'chang'">长</span>
-                        <span v-if="scope.row.class == 'squre'">方</span>
-                        <span v-if="scope.row.class == 'circle'">圆</span>
-                        <span v-if="scope.row.class == 'shan'">扇</span>
+                        <span v-if="scope.row.shape == 'rectangle'">长</span>
+                        <span v-if="scope.row.shape == 'square'">方</span>
+                        <span v-if="scope.row.shape == 'circle'">圆</span>
+                        <span v-if="scope.row.shape == 'sector'">扇</span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="src" label="地址"></el-table-column>
@@ -248,12 +248,13 @@
             }
         },
         mounted: function () {
-            this.$axios.get('/api/allpainting').then(res => {
-                this.tableData = res.data.data;
+            this.$axios.get('/paint/getList').then(res => {
+                
+                this.tableData = res.data.data.records;
                 this.curPageData = this.tableData.slice(0, 10);
             })
-            this.$axios.get('/api/getAllClass').then(res => {
-                this.allClass = res.data.data;
+            this.$axios.get('/paint/getClassList').then(res => {
+                this.allClass = res.data.data.records;
             })
         }
     }
