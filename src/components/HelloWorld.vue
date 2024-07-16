@@ -14,7 +14,7 @@
                 <el-table-column prop="name" label="名称"></el-table-column>
                 <el-table-column label="图片">
                     <template slot-scope="scope">
-                        <el-image :src="'http://47.94.237.19'+scope.row.src" :fit="'fit'"></el-image>
+                        <el-image :src="'/fileServer'+scope.row.src" :fit="'fit'"></el-image>
                     </template>
                 </el-table-column>
                 <el-table-column label="分类">
